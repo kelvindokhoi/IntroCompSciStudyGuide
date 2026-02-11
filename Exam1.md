@@ -74,7 +74,7 @@ print(price) # Output: 1.50
 From highest to lowest:
 1. Parentheses `()`
 2. Exponentiation `**`
-3. Multiplication `*`, Division `/`, Floor Division `//`, Modulo `%`
+3. Multiplication `*`, Division `/`, Integer Division `//`, Remainder `%`
 4. Addition `+`, Subtraction `-`
 5. Comparison Operators `==`, `!=`, `<`, `>`, `<=`, `>=`
 6. Logical Operators `not`, `and`, `or`
