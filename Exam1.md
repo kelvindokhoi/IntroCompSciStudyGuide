@@ -22,7 +22,7 @@ An operating system (OS) manages hardware and software resources. Examples inclu
 
 ### Chapter 2: Elementary Programming
 
-## Variables and Assignments
+#### Variables and Assignments
 
 - A **variable** is a name that refers to a value stored in memory
 - Assignment uses `=` (not equality!)
@@ -54,7 +54,7 @@ x **= 2  # x = x ** 2
 
 ---
 
-## Getting Input
+#### Getting Input
 
 - `input()` **always returns a string** — must convert for math
 
@@ -68,7 +68,7 @@ gpa = float(input("Enter your GPA: "))      # convert to float
 
 ---
 
-## Data Types
+#### Data Types
 
 | Type    | Description     | Example           |
 | ------- | --------------- | ----------------- |
@@ -77,7 +77,7 @@ gpa = float(input("Enter your GPA: "))      # convert to float
 | `str`   | Text / strings  | `"hello"`, `'hi'` |
 | `bool`  | True or False   | `True`, `False`   |
 
-### Type Conversion (Casting)
+#### Type Conversion (Casting)
 
 ```python
 int(3.9)       # 3  (truncates, does NOT round)
@@ -88,7 +88,7 @@ float("3.14")  # 3.14
 type(x)        # check the type of x
 ```
 
-### Key Rules
+#### Key Rules
 
 - `int / int` → **always `float`** in Python 3 (e.g., `5 / 2` → `2.5`)
 - `int // int` → **always `int`** in Python 3 (e.g., `5 // 2` → `2`)
@@ -97,7 +97,7 @@ type(x)        # check the type of x
 
 ---
 
-## Operators (in order of precedence)
+#### Operators (in order of precedence)
 
 | Precedence  | Operator            | Description                          | Example              |
 | ----------- | ------------------- | ------------------------------------ | -------------------- |
@@ -109,7 +109,7 @@ type(x)        # check the type of x
 - **Same precedence** → evaluated **left to right** (except `**` which is **right to left**)
 - Use **parentheses `()`** to override precedence
 
-### Key Operators
+#### Key Operators
 
 ```python
 10 / 3     # 3.3333...  (true division, always float)
@@ -128,9 +128,9 @@ x % 10       # get last digit
 
 ---
 
-## String Formatting
+#### String Formatting
 
-### 1. f-strings
+##### 1. f-strings
 
 ```python
 name = "Alice"
@@ -150,7 +150,7 @@ print(f"{'hi':>10}")       # "        hi"  (right-align, width 10)
 print(f"{'hi':<10}")       # "hi        "  (left-align, width 10)
 ```
 
-### 2. `print()` details
+##### 2. `print()` details
 
 ```python
 print("a", "b", "c")            # a b c  (space separated by default)
@@ -161,7 +161,7 @@ print("hello", end="!\n")       # custom ending
 
 ---
 
-## Quick Reference — Common Pitfalls
+#### Quick Reference — Common Pitfalls
 
 | Mistake                          | Why it's wrong                   | Fix                            |
 | -------------------------------- | -------------------------------- | ------------------------------ |
@@ -434,3 +434,186 @@ s.split(",")        # split by comma
 "hello" == "hello"      # True
 "Hello" == "hello"      # False (case-sensitive)
 ```
+
+### Chapter 5: Loops
+
+#### While Loops
+
+A `while` loop repeats a block of code **as long as** its condition is `True`.
+
+```python
+# Basic syntax
+while condition:
+    # code to repeat
+
+# Example: print 1 to 5
+i = 1
+while i <= 5:
+    print(i)
+    i += 1        # don't forget to update, or infinite loop!
+```
+
+- The condition is checked **before** each iteration
+- If the condition is `False` from the start, the body **never executes**
+
+---
+
+#### Counter-Controlled Loops
+
+Use a variable to count iterations.
+
+```python
+# Sum of 1 to 100
+total = 0
+i = 1
+while i <= 100:
+    total += i
+    i += 1
+print(total)    # 5050
+```
+
+---
+
+#### Infinite Loops
+
+A loop that **never ends** because the condition is always `True`.
+
+```python
+# BAD — infinite loop (no update to i)
+i = 1
+while i <= 5:
+    print(i)
+    # forgot i += 1  → prints 1 forever
+
+# Intentional infinite loop (use with break)
+while True:
+    user = input("Enter 'q' to quit: ")
+    if user == 'q':
+        break       # exits the loop
+```
+
+---
+
+#### `break` and `continue`
+
+- **`break`** — immediately **exits** the loop entirely
+- **`continue`** — **skips** the rest of the current iteration and jumps back to the condition
+
+```python
+# break example: stop at 5
+i = 0
+while i < 10:
+    i += 1
+    if i == 5:
+        break
+    print(i)
+# Output: 1 2 3 4
+
+# continue example: skip 5
+i = 0
+while i < 10:
+    i += 1
+    if i == 5:
+        continue
+    print(i)
+# Output: 1 2 3 4 6 7 8 9 10
+```
+
+---
+
+#### Sentinel Value
+
+A **sentinel** is a special value that signals the end of input (e.g., `-1`, `0`, `"done"`).
+
+```python
+# Read numbers until user enters 0
+total = 0
+num = int(input("Enter a number (0 to stop): "))
+while num != 0:
+    total += num
+    num = int(input("Enter a number (0 to stop): "))
+print("Total:", total)
+```
+
+---
+
+#### Input Validation with While
+
+```python
+# Keep asking until valid input
+score = int(input("Enter score (0-100): "))
+while score < 0 or score > 100:
+    print("Invalid! Try again.")
+    score = int(input("Enter score (0-100): "))
+```
+
+---
+
+### Miscellaneous: Using Random
+
+The `random` module provides functions for generating random numbers.
+
+```python
+import random
+```
+
+#### `random.randint(a, b)`
+
+Returns a random **integer** N such that `a <= N <= b` (**inclusive** on both ends).
+
+```python
+random.randint(1, 6)     # random int from 1 to 6 (like a dice roll)
+random.randint(0, 100)   # random int from 0 to 100
+```
+
+#### `random.randrange(a, b)`
+
+Returns a random **integer** N such that `a <= N < b` (**excludes** `b`, like `range()`).
+
+```python
+random.randrange(1, 7)     # random int from 1 to 6 (same as randint(1,6))
+random.randrange(0, 10, 2) # random even number: 0, 2, 4, 6, or 8
+```
+
+#### `random.random()`
+
+Returns a random **float** in the range `[0.0, 1.0)` (includes 0.0, excludes 1.0).
+
+```python
+random.random()            # e.g., 0.37444887175646646
+random.random() * 100      # random float from 0.0 to 99.999...
+```
+
+#### `random.choice(seq)`
+
+Returns a **random element** from a non-empty sequence (list, string, tuple).
+
+```python
+random.choice([1, 2, 3, 4, 5])        # random element from list
+random.choice("abcdef")               # random character from string
+random.choice(["heads", "tails"])      # coin flip
+```
+
+#### `random.shuffle(seq)`
+
+**Shuffles** a list **in place** (modifies the original list, returns `None`).
+
+```python
+cards = [1, 2, 3, 4, 5]
+random.shuffle(cards)
+print(cards)          # e.g., [3, 1, 5, 2, 4]  (order randomized)
+
+# IMPORTANT: works on lists only, not strings (strings are immutable)
+```
+
+---
+
+#### Random Quick Reference
+
+| Function          | Returns           | Range               |
+| ----------------- | ----------------- | ------------------- |
+| `randint(a, b)`   | `int`             | `[a, b]` inclusive  |
+| `randrange(a, b)` | `int`             | `[a, b)` excludes b |
+| `random()`        | `float`           | `[0.0, 1.0)`        |
+| `choice(seq)`     | element from seq  | any element         |
+| `shuffle(list)`   | `None` (in-place) | N/A                 |
