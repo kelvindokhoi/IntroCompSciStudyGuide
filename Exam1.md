@@ -726,21 +726,7 @@ x = get_square(4)  # x becomes 16
 
 #### Scope
 
-- **Local Scope**: Variables defined inside a function. They only exist while the function is running.
-- **Global Scope**: Variables defined outside functions. Accessible everywhere.
-
-```python
-x = 10  # Global
-
-def my_func():
-    y = 5           # Local
-    global x        # Modify global variable
-    x = 20
-    print(x, y)
-
-my_func()
-# print(y)  # NameError: name 'y' is not defined
-```
+- **Local Scope**: Variables defined inside a function. They only exist while the instance of a function is running.
 
 ### Chapter 7 (Part 1): Lists
 
@@ -852,7 +838,7 @@ for i in range(size):
 
 #### Copying Lists
 
-**Warning**: `list2 = list1` does NOT copy; it makes both point to the same list (aliases).
+**Warning**: `list2 = list1` does NOT copy; it makes 2 variables storing the same list.
 
 ```python
 list1 = [1, 2, 3]
