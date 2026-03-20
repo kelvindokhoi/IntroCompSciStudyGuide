@@ -617,3 +617,238 @@ print(cards)          # e.g., [3, 1, 5, 2, 4]  (order randomized)
 | `random()`        | `float`           | `[0.0, 1.0)`        |
 | `choice(seq)`     | element from seq  | any element         |
 | `shuffle(list)`   | `None` (in-place) | N/A                 |
+
+# Exam 2
+
+### Chapter 5 (Part 2): For Loops
+
+#### For Loops
+
+A `for` loop is used for iterating over a sequence (list, tuple, string, or range).
+
+```python
+# Iterating over a string
+for char in "Python":
+    print(char)
+
+# Iterating over a range
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4 (excludes 5)
+
+# range(start, stop, step)
+for i in range(2, 10, 2):
+    print(i)  # 2, 4, 6, 8
+```
+
+#### Nested For Loops
+
+A loop inside another loop. The inner loop completes all its iterations for every single iteration of the outer loop.
+
+```python
+for i in range(3):        # Outer loop
+    for j in range(2):    # Inner loop
+        print(f"i={i}, j={j}")
+```
+
+#### Using break and continue
+
+- **`break`**: Stops the loop completely.
+- **`continue`**: Skips the rest of the current iteration and moves to the next one.
+
+```python
+for i in range(10):
+    if i == 5:
+        break     # Stops at 5
+    if i % 2 == 0:
+        continue  # Skips even numbers
+    print(i)      # Output: 1, 3
+```
+
+#### What is the difference between a for loop and a while loop?
+
+| Feature         | For Loop                                 | While Loop                                   |
+| :-------------- | :--------------------------------------- | :------------------------------------------- |
+| **Usage**       | Known number of iterations (determinate) | Unknown number of iterations (indeterminate) |
+| **Control**     | Iterates over a sequence or range        | Iterates as long as a condition is `True`     |
+| **Efficiency**  | Generally cleaner for lists/ranges       | Better for sentinel values or input validation |
+
+### Chapter 6: Functions
+
+#### Defining Functions
+
+Functions are reusable blocks of code that perform a specific task. They start with the `def` keyword.
+
+```python
+def greet_user():
+    """Docstring: simple greeting."""
+    print("Hello!")
+```
+
+#### Calling Functions
+
+To execute a function, use its name followed by parentheses.
+
+```python
+greet_user()  # Output: Hello!
+```
+
+#### Function Parameters and Arguments
+
+- **Parameters**: Variables listed in the function definition.
+- **Arguments**: Values sent to the function when it is called.
+
+```python
+def add(a, b):       # a and b are parameters
+    return a + b
+
+result = add(5, 3)   # 5 and 3 are arguments
+```
+
+- **Default Parameters**:
+```python
+def power(base, exp=2):
+    return base ** exp
+
+print(power(4))     # 16 (uses default exp=2)
+print(power(4, 3))  # 64 (overrides default)
+```
+
+#### Return Values
+
+The `return` statement sends a result back to the caller and exits the function. If no `return` is used, the function returns `None`.
+
+```python
+def get_square(n):
+    return n * n
+
+x = get_square(4)  # x becomes 16
+```
+
+#### Scope
+
+- **Local Scope**: Variables defined inside a function. They only exist while the instance of a function is running.
+
+### Chapter 7 (Part 1): Lists
+
+#### List Basics
+
+Lists are ordered, mutable collections of items. They can hold different data types.
+
+```python
+fruits = ["apple", "banana", "cherry"]
+numbers = [1, 2, 3, 4]
+mixed = [1, "hello", 3.14, True]
+```
+
+#### List Methods
+
+| Method           | Description                          | Example               |
+| :--------------- | :----------------------------------- | :-------------------- |
+| `append(x)`      | Adds `x` to the end                  | `l.append(4)`         |
+| `insert(i, x)`   | Inserts `x` at index `i`             | `l.insert(0, "hi")`   |
+| `remove(x)`      | Removes first occurrence of `x`      | `l.remove("apple")`   |
+| `pop(i)`         | Removes and returns item at `i`      | `item = l.pop(1)`     |
+| `sort()`         | Sorts the list in place              | `l.sort()`            |
+| `reverse()`      | Reverses the list in place           | `l.reverse()`         |
+| `index(x)`       | Returns index of first `x`           | `i = l.index(3)`      |
+| `count(x)`       | Returns number of `x` in list        | `c = l.count(1)`      |
+
+#### List Operations
+
+```python
+list1 = [1, 2]
+list2 = [3, 4]
+
+# Concatenation (+)
+combined = list1 + list2  # [1, 2, 3, 4]
+
+# Repetition (*)
+triple = list1 * 3        # [1, 2, 1, 2, 1, 2]
+
+# Membership (in)
+print(1 in list1)         # True
+```
+
+#### List Comprehensions
+
+A concise way to create lists.
+Syntax: `[expression for item in iterable if condition]`
+
+```python
+squares = [x**2 for x in range(5)]           # [0, 1, 4, 9, 16]
+evens = [x for x in range(10) if x % 2 == 0]  # [0, 2, 4, 6, 8]
+```
+
+#### Indexing
+
+Same as strings (0-indexed).
+
+```python
+l = [10, 20, 30]
+l[0]    # 10
+l[-1]   # 30 (last)
+l[1] = 99  # Mutable: l is now [10, 99, 30]
+```
+
+#### Slicing
+
+Syntax: `list[start:stop:step]`
+
+```python
+l = [0, 1, 2, 3, 4, 5]
+l[1:4]   # [1, 2, 3]
+l[:3]    # [0, 1, 2]
+l[::2]   # [0, 2, 4]
+l[::-1]  # [5, 4, 3, 2, 1, 0] (reverse)
+```
+
+#### Iterating through lists
+
+```python
+# Direct iteration
+for item in fruits:
+    print(item)
+
+# Iteration by index
+for i in range(len(fruits)):
+    print(f"Index {i}: {fruits[i]}")
+```
+
+#### List Comparison
+
+Lists are compared element by element (lexicographically).
+
+```python
+[1, 2, 3] < [1, 2, 4]    # True
+[1, 2] == [1, 2]         # True
+```
+
+#### Taking Input
+
+```python
+# Single line of integers
+nums = [int(x) for x in input("Enter numbers: ").split()]
+
+# Multiple lines
+size = int(input("How many items? "))
+items = []
+for i in range(size):
+    items.append(input("Enter item: "))
+```
+
+#### Copying Lists
+
+**Warning**: `list2 = list1` does NOT copy; it makes 2 variables storing the same list.
+
+```python
+list1 = [1, 2, 3]
+
+# Proper copying
+list2 = [x for x in list1]
+list3 = list1[:]
+list4 = list(list1)
+
+# Modification of list1 won't affect copies
+```
+
+
