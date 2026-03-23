@@ -280,6 +280,7 @@ math.floor(2.9)   # 2         → round DOWN
 math.fabs(-5)     # 5.0       → absolute value (float)
 math.log(8, 2)    # 3.0       → log base 2
 math.log10(1000)  # 3.0       → log base 10
+math.gcd(a,b)     #returns greatest common divisors of integers a and b
 ```
 
 - `math.ceil()` rounds **up**, `math.floor()` rounds **down**, `round()` rounds to **nearest**
