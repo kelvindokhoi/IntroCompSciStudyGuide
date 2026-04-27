@@ -852,4 +852,168 @@ list4 = list(list1)
 # Modification of list1 won't affect copies
 ```
 
+# Final Exam (Everything past Exam 2)
 
+### Chapter 8: Multidimensional Lists
+
+#### Creating 2D lists
+
+A 2D list is simply a list of lists.
+```python
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+```
+
+Using a loop or list comprehension:
+```python
+# 3 rows, 4 columns filled with 0
+rows = 3
+cols = 4
+matrix = [[0 for j in range(cols)] for i in range(rows)]
+```
+*Note: `[[0] * cols] * rows` creates references to the SAME inner list, which can cause bugs when modifying elements.*
+
+#### Using 2D lists
+
+Accessing and modifying elements uses two indices: `list_name[row][col]`.
+
+```python
+matrix[0][1] = 99  # Modifies row 0, column 1
+```
+
+Iterating through a 2D list:
+```python
+for row in matrix:
+    for item in row:
+        print(item, end=" ")
+    print()
+```
+
+Or by index:
+```python
+for r in range(len(matrix)):
+    for c in range(len(matrix[r])):
+        print(matrix[r][c], end=" ")
+    print()
+```
+
+### Chapter 9: Objects and Classes
+
+#### What is an object?
+
+An object is a specific instance of a class that contains data (attributes) and behaviors (methods). In Python, almost everything is an object.
+
+#### What is a class?
+
+A class is a blueprint or template for creating objects. It defines what attributes and methods the objects will have.
+
+#### Defining Classes
+
+Use the `class` keyword. By convention, class names use `PascalCase`.
+
+```python
+class Dog:
+    # Class body goes here
+    pass
+```
+
+#### Instance Variables
+
+Variables that belong to a specific object. They are initialized in the constructor method `__init__`.
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name  # Instance variable
+        self.age = age    # Instance variable
+
+my_dog = Dog("Buddy", 3)
+print(my_dog.name)  # Output: Buddy
+```
+- `self` refers to the specific object being created/used. It must be the first parameter in instance methods.
+
+#### Methods
+
+Functions defined inside a class that define the behaviors of objects.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+    
+    def bark(self):
+        print(f"{self.name} says Woof!")
+
+my_dog = Dog("Buddy")
+my_dog.bark()  # Output: Buddy says Woof!
+```
+
+#### Magic Methods
+
+Special methods starting and ending with double underscores (dunder methods). They allow customization of built-in behavior.
+- `__init__(self)`: Constructor, called when creating a new object.
+- `__str__(self)`: Returns a readable string representation (called by `print()` or `str()`).
+- `__add__(self, other)`: Defines behavior for the `+` operator.
+- `__sub__(self, other)`: Defines behavior for the `-` operator.
+- `__eq__(self, other)`: Defines behavior for the equality operator `==`.
+- `__lt__(self, other)`: Defines behavior for the less-than operator `<`.
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Point(self.x - other.x, self.y - other.y)
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+    def __lt__(self, other):
+        # Compare distances from origin
+        return (self.x**2 + self.y**2) < (other.x**2 + other.y**2)
+
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+
+print(p1)           # Output: (1, 2)
+print(p1 + p2)      # Output: (4, 6)
+print(p2 - p1)      # Output: (2, 2)
+print(p1 == p2)     # Output: False
+print(p1 < p2)      # Output: True
+```
+
+#### Getters and Setters
+
+Methods used to access (get) or update (set) private attributes safely. Private attributes often start with an underscore `_` (convention) or double underscore `__` (name mangling).
+
+```python
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # Private attribute
+
+    # Getter
+    def get_balance(self):
+        return self.__balance
+
+    # Setter
+    def set_balance(self, amount):
+        if amount >= 0:
+            self.__balance = amount
+        else:
+            print("Invalid amount")
+
+account = BankAccount(100)
+print(account.get_balance())
+account.set_balance(150)
+```
