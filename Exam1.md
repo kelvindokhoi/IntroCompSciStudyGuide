@@ -1017,3 +1017,143 @@ account = BankAccount(100)
 print(account.get_balance())
 account.set_balance(150)
 ```
+
+### Chapter 13: Files and Exception Handling
+
+#### Text Input and Output
+To read text from a file, we do:
+```python
+file = open("filename.txt", "r")  # "r" for read mode
+content = file.read()  # Read entire file as a string
+file.close()  # Always close the file when done
+```
+To write text to a file, we do:
+```python
+file = open("filename.txt", "w")  # "w" for write mode (overwrites existing)
+file.write("Hello, world!\n")  # Write a string to the file
+file.close()  # Always close the file when done
+```
+
+To append text to a file, we do:
+```python
+file = open("filename.txt", "a")  # "a" for append mode
+file.write("This will be added to the end of the file.\n")
+file.close()  # Always close the file when done
+```
+
+Anything that we read or write to a file is treated as a string. If we want to work with numbers, we need to convert them using `int()` or `float()`.
+```python
+file = open("numbers.txt", "r")
+line = file.readline()  # Read one line as a string
+number = int(line)  # Convert the string to an integer
+file.close()
+```
+
+#### Exception Handling
+When the Python programs encounter an error, they raise an exception and stop abruptly. We don't want that to happen in any cases, so we can use exception handling to catch and handle errors gracefully.
+
+```python
+try:
+    # Code that may raise an exception
+    num = int(input("Enter a number: "))
+    result = 10 / num
+    print("Result:", result)
+except ValueError:
+    print("Invalid input! Please enter a valid integer.")
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+except Exception as e:
+    print("An unexpected error occurred:", e)
+```
+
+or like this when we try to open a file that may not exist:
+```python
+try:
+    file = open("nonexistent.txt", "r")
+    content = file.read()
+    file.close()
+except FileNotFoundError:
+    print("The file does not exist!")
+```
+
+#### Raising Exceptions
+We can also raise exceptions ourselves when we want to signal that something went wrong.
+
+```python
+raise ExceptionClass("Something is wrong") # ExceptionClass can be ValueError, TypeError, etc. or a custom exception class we define ourselves.
+raise RuntimeError("Wrong argument") 
+```
+
+#### Binary Input and Output using Pickle
+Binary files usually have the `.dat` extension. We can use the `pickle` module to read and write binary files.
+To read or write, we have to open the file in binary mode by adding `b` to the mode string, like `"rb"` for reading and `"wb"` for writing. Then, we can use `pickle.dump()` to write an object to a file and `pickle.load()` to read an object from a file.
+```python
+import pickle
+# Writing to a binary file
+data = {"name": "Alice", "age": 30}
+with open("data.dat", "wb") as file:
+    pickle.dump(data, file)
+# Reading from a binary file
+with open("data.dat", "rb") as file:
+    loaded_data = pickle.load(file)
+print(loaded_data)  # Output: {'name': 'Alice', 'age': 30}
+```
+### Chapter 14: Tuples, Sets, and Dictionaries
+
+Here's the summary of the key points about tuples, sets, and dictionaries:
+| Property | List | Tuple | Set | Dictionary |
+| -------- | ---- | ----- | --- | ---------- |
+| Syntax | `[]` or `list()` | `()` or `tuple()` | `{}` or `set()` | `{key: value}` or `dict()` |
+| Accessing Syntax | `mylist[index]` | `mytuple[index]` | No indexing (unordered) | `mydict[key]` |
+| Mutability | Mutable | Immutable | Mutable | Mutable |
+| Ordered | Yes | Yes | No | No |
+| Duplicates | Allowed | Allowed | Not allowed | Keys not allowed, values allowed |
+| Indexing | Yes | Yes | No | No |
+| Iteration | Yes | Yes | Yes (unordered) | Yes (keys) |
+| Use Cases | General-purpose collection | Fixed data, multiple types | Unique items, membership testing | Key-value pairs, fast lookup |
+
+#### Tuples
+- A tuple is an ordered, immutable collection of items. It is defined using parentheses `()`.
+```python
+my_tuple = (1, 2, 3)
+print(my_tuple[0])  # Output: 1
+for item in my_tuple:
+    print(item,end=" ")  # Output: 1 2 3
+my_list_of_tuples = [(1, 2), (3, 4), (5, 6)]
+```
+#### Sets
+- A set is an unordered, mutable collection of unique items. It is defined using curly braces `{}`.
+```python
+my_set = {1, 2, 3}
+print(my_set)  # Output: {1, 2, 3}
+my_set.add(4)  # my_set is now {1, 2, 3, 4}
+my_set.add(2)  # my_set is still {1, 2, 3, 4} (2 is already in the set)
+my_set.remove(3)  # my_set is now {1, 2, 4}
+new_set = {3, 4, 5}
+print(my_set.union(new_set))  # Output: {1, 2, 3, 4, 5}
+print(my_set.intersection(new_set))  # Output: {4}
+print(my_set.difference(new_set))  # Output: {1, 2}
+```
+
+#### Dictionaries
+- A dictionary is an unordered, mutable collection of key-value pairs. It is defined using curly braces `{}` with a colon `:` separating keys and values.
+```python
+my_dict = {"name": "Alice", "age": 30}
+print(my_dict["name"])  # Output: Alice
+my_dict["age"] = 31  # Update age to 31
+my_dict["city"] = "New York"  # Add new key-value pair
+print(my_dict)  # Output: {'name': 'Alice', 'age': 31, 'city': 'New York'}
+for key in my_dict:
+    print(key, my_dict[key])  # Output: name Alice, age 31, city New York
+my_dict.pop("age")  # Remove the key "age"
+print(my_dict)  # Output: {'name': 'Alice', 'city': 'New York'}
+#Common errors:
+print(my_dict["age"])  # KeyError: 'age' (since "age" was removed)
+my_dict[[1, 2]] = "value"  # TypeError: unhashable type: 'list' (keys must be immutable)
+my_dict[{"key": "value"}] = "value"  # TypeError: unhashable type: 'dict' (keys must be immutable)
+my_dict[("tuple","")] = "value"  # This works since tuples are immutable
+```
+#### Where to use each type:
+- Use a **tuple** when you want an ordered collection of items that should not change (e.g., coordinates, RGB color).
+- Use a **set** when you want a collection of unique items and don't care about order (e.g., unique words in a text).
+- Use a **dictionary** when you want to associate keys with values (e.g., a phone book, student grades).
