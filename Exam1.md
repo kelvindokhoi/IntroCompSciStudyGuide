@@ -1076,6 +1076,30 @@ except FileNotFoundError:
     print("The file does not exist!")
 ```
 
+we can also use finally or else blocks:
+```python
+try:
+    file = open("data.txt", "r")
+    content = file.read()
+except FileNotFoundError:
+    print("The file does not exist!")
+else:
+    print("File read successfully!")
+finally:
+    print("This will always execute, whether an exception occurred or not.")
+```
+
+to verify if a file exists before trying to open it, we can use the `os` module:
+```python
+import os
+if os.path.exists("data.txt"): # returns True if the file exists, False otherwise
+    file = open("data.txt", "r")
+    content = file.read()
+    file.close()
+else:
+    print("The file does not exist!")
+```
+
 #### Raising Exceptions
 We can also raise exceptions ourselves when we want to signal that something went wrong.
 
